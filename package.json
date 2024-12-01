@@ -15,6 +15,7 @@
 		"@sentry/node": "^8.37.1",
 		"@sentry/profiling-node": "^8.37.1",
 		"@types/stremio-addon-sdk": "^1.6.11",
+		"dayjs": "^1.11.13",
 		"ioredis": "^5.4.1",
 		"stremio-addon-sdk": "1.1.x"
 	},

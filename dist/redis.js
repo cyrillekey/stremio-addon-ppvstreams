@@ -20,7 +20,7 @@ const saveToCache = (id, data) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.saveToCache = saveToCache;
 const getFromCache = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const record = yield redis.get(id.toString());
+    const record = yield redis.get(id);
     if (!record) {
         return null;
     }

@@ -97,6 +97,42 @@ const nhlCatalogueBuilder = () => __awaiter(void 0, void 0, void 0, function* ()
                     availableChannels.push(exits.streams);
                 }
             }
+            if (channel.includes('MSGSN')) {
+                //
+            }
+            if (channel.includes('NBCSP')) {
+                //
+            }
+            if (channel.includes('NBCSCA')) {
+                //
+            }
+            if (channel.includes('FDSNSUN')) {
+                //
+            }
+            if (channel.includes('FDSNSO')) {
+                //
+            }
+            if (channel.includes('FDSNOH')) {
+                //
+            }
+            if (channel.includes('FDSNWIX')) {
+                //
+            }
+            if (channel.includes('FDSNMW')) {
+                //
+            }
+            if (channel.includes('NHLN')) {
+                //
+            }
+            if (channel.includes('FDSNDET')) {
+                // pass
+            }
+            if (channel.includes('FDSNWIX')) {
+                //
+            }
+            if (channel.includes('FDSNNO')) {
+                //
+            }
             if (availableChannels.length > 0) {
                 const meta = {
                     id: `tvusa-${current.id}`,

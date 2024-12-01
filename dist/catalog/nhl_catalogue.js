@@ -138,6 +138,8 @@ const nhlCatalogueBuilder = () => __awaiter(void 0, void 0, void 0, function* ()
                     id: `tvusa-${current.id}`,
                     type: "tv",
                     posterShape: "square",
+                    poster: "https://res.cloudinary.com/dftgy3yfd/image/upload/nhl-cover_wfpnvg.webp",
+                    background: "https://res.cloudinary.com/dftgy3yfd/image/upload/nhl-cover_wfpnvg.webp",
                     logo: "https://static.cdnlogo.com/logos/n/4/nhl-8211-national-hockey-league.png",
                     name: `${current.awayTeam.placeName} ${current.awayTeam.commonName} at ${current.homeTeam.placeName} ${current.homeTeam}`,
                     description: `${current.awayTeam.placeName} ${current.awayTeam.commonName} at ${current.homeTeam.placeName} ${current.homeTeam}`,

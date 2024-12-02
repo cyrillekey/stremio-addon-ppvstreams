@@ -34,7 +34,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Sentry = __importStar(require("@sentry/node"));
 const stremio_addon_sdk_1 = require("stremio-addon-sdk");
-const nhl_catalogue_1 = require("catalog/nhl_catalogue");
+const nhl_catalogue_1 = require("./catalog/nhl_catalogue");
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 const manifest = {
     id: 'community.ppvstreams',
@@ -177,6 +177,24 @@ builder.defineCatalogHandler((_a) => __awaiter(void 0, [_a], void 0, function* (
 builder.defineMetaHandler((_a) => __awaiter(void 0, [_a], void 0, function* ({ id }) {
     const regEx = RegExp(/^\d+$/gm);
     if (!regEx.test(id)) {
+        if (id.match(/tvusa/gi)) {
+            const catalog = yield (0, nhl_catalogue_1.nhlCatalogueBuilder)();
+            const item = catalog.find((a) => a.id == id);
+            if (item)
+                return {
+                    meta: {
+                        id,
+                        name: item.name,
+                        description: item.description,
+                        type: "tv",
+                        background: item === null || item === void 0 ? void 0 : item.background,
+                        poster: item === null || item === void 0 ? void 0 : item.poster,
+                        posterShape: item === null || item === void 0 ? void 0 : item.posterShape,
+                        country: "USA",
+                        logo: item === null || item === void 0 ? void 0 : item.logo,
+                    }
+                };
+        }
         return {
             meta: {
                 id: id,
@@ -196,6 +214,13 @@ builder.defineMetaHandler((_a) => __awaiter(void 0, [_a], void 0, function* ({ i
 builder.defineStreamHandler((_a) => __awaiter(void 0, [_a], void 0, function* ({ id }) {
     const regEx = RegExp(/^\d+$/gm);
     if (!regEx.test(id)) {
+        if (id.match(/tvusa/gi)) {
+            const catalog = yield (0, nhl_catalogue_1.nhlStreamBuilder)(id);
+            console.log(catalog);
+            return {
+                streams: catalog
+            };
+        }
         return {
             streams: []
         };

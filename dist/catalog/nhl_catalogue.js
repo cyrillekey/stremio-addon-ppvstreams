@@ -35,10 +35,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.nhlCatalogueBuilder = void 0;
+exports.nhlStreamBuilder = exports.nhlCatalogueBuilder = void 0;
 const Sentry = __importStar(require("@sentry/node"));
 const dayjs_1 = __importDefault(require("dayjs"));
-const redis_1 = require("redis");
+const redis_1 = require("../redis");
 const fetchSchedule = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -72,6 +72,128 @@ const fetchTvUsaSportsLinks = () => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 const nhlCatalogueBuilder = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const allGameWeeks = yield fetchSchedule();
+        // filter for only active gameweeks
+        const allGames = allGameWeeks.slice(0, 2).map((a) => a.games).flat();
+        // filter to include only games that are currently underway
+        const underway = allGames.filter((a) => {
+            if (a.gameState == "LIVE" || a.gameState == "FUT")
+                return a;
+            // TODO undo after testing is complete
+            // if (a.gameState == "FUT") {
+            //     const startTime = dayjs(a.startTimeUTC).add(30, 'minutes').unix()
+            //     if (startTime < Date.now()) {
+            //         return a
+            //     }
+            // }
+        });
+        const streams = yield fetchTvUsaSportsLinks();
+        const meta = underway.reduce((total, current) => {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+            const availableChannels = [];
+            const channel = current.tvBroadcasts.filter((a) => a.countryCode == "US").map((a) => a.network);
+            if (channel.includes('MSG')) {
+                const exits = streams.find((a) => a.tvgId == "MSG.us");
+                if (exits != undefined) {
+                    availableChannels.push(...exits.streams);
+                }
+            }
+            if (channel.includes('FDSNSUN')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/sun/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/sun/gi); }));
+                }
+            }
+            if (channel.includes('FDSNSO')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/south/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/south/gi); }));
+                }
+            }
+            if (channel.includes('FDSNOH')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/ohio/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/ohio/gi); }));
+                }
+            }
+            if (channel.includes('FDSNW')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/West/); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/West/); }));
+                }
+                //
+            }
+            if (channel.includes('FDSNWIX')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/Wisconsin/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/Wisconsin/gi); }));
+                }
+                //
+            }
+            if (channel.includes('FDSNMW')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/Midwest/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/Midwest/gi); }));
+                }
+            }
+            if (channel.includes('NHLN')) {
+                const exits = streams.find((a) => a.tvgId == "NHLNetwork.us");
+                if (exits != undefined) {
+                    availableChannels.push(...exits.streams);
+                }
+            }
+            if (channel.includes('FDSNDET')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/detroit/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/detroit/gi); }));
+                }
+            }
+            if (channel.includes('FDSNNO')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/north/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/north/gi); }));
+                }
+            }
+            if (channel.includes('KTTV')) {
+                const exits = streams.find((a) => a.tvgId == "WNYW.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/KTTV/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/KTTV/gi); }));
+                }
+            }
+            if (availableChannels.length > 0) {
+                const meta = {
+                    id: `tvusa-${current.id}`,
+                    type: "tv",
+                    posterShape: "square",
+                    poster: "https://res.cloudinary.com/dftgy3yfd/image/upload/nhl-cover_wfpnvg.webp",
+                    background: "https://res.cloudinary.com/dftgy3yfd/image/upload/nhl-cover_wfpnvg.webp",
+                    logo: "https://static.cdnlogo.com/logos/n/4/nhl-8211-national-hockey-league.png",
+                    name: `${(_a = current.awayTeam.placeName) === null || _a === void 0 ? void 0 : _a.default} ${(_b = current.awayTeam.commonName) === null || _b === void 0 ? void 0 : _b.default} at ${(_c = current.homeTeam.placeName) === null || _c === void 0 ? void 0 : _c.default} ${(_e = (_d = current.homeTeam) === null || _d === void 0 ? void 0 : _d.commonName) === null || _e === void 0 ? void 0 : _e.default}`,
+                    description: `${(_f = current.awayTeam.placeName) === null || _f === void 0 ? void 0 : _f.default} ${(_g = current.awayTeam.commonName) === null || _g === void 0 ? void 0 : _g.default} at ${(_h = current.homeTeam.placeName) === null || _h === void 0 ? void 0 : _h.default} ${(_k = (_j = current.homeTeam) === null || _j === void 0 ? void 0 : _j.commonName) === null || _k === void 0 ? void 0 : _k.default}`,
+                };
+                total.push(meta);
+            }
+            return total;
+        }, []);
+        return meta;
+    }
+    catch (error) {
+        Sentry.captureException(error);
+        return [];
+    }
+});
+exports.nhlCatalogueBuilder = nhlCatalogueBuilder;
+const nhlStreamBuilder = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const allGameWeeks = yield fetchSchedule();
         // filter for only active gameweeks
@@ -169,19 +291,8 @@ const nhlCatalogueBuilder = () => __awaiter(void 0, void 0, void 0, function* ()
                         availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/KTTV/gi); }));
                 }
             }
-            if (availableChannels.length > 0) {
-                const meta = {
-                    id: `tvusa-${current.id}`,
-                    type: "tv",
-                    posterShape: "square",
-                    poster: "https://res.cloudinary.com/dftgy3yfd/image/upload/nhl-cover_wfpnvg.webp",
-                    background: "https://res.cloudinary.com/dftgy3yfd/image/upload/nhl-cover_wfpnvg.webp",
-                    logo: "https://static.cdnlogo.com/logos/n/4/nhl-8211-national-hockey-league.png",
-                    name: `${current.awayTeam.placeName} ${current.awayTeam.commonName} at ${current.homeTeam.placeName} ${current.homeTeam}`,
-                    description: `${current.awayTeam.placeName} ${current.awayTeam.commonName} at ${current.homeTeam.placeName} ${current.homeTeam}`,
-                };
-                total.push(meta);
-            }
+            if (`tvusa-${current.id}` == id)
+                total.push(...availableChannels);
             return total;
         }, []);
         return meta;
@@ -191,4 +302,4 @@ const nhlCatalogueBuilder = () => __awaiter(void 0, void 0, void 0, function* ()
         return [];
     }
 });
-exports.nhlCatalogueBuilder = nhlCatalogueBuilder;
+exports.nhlStreamBuilder = nhlStreamBuilder;

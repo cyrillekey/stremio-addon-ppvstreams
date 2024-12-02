@@ -8,7 +8,7 @@ import {
 } from 'stremio-addon-sdk'
 
 import { IPPLandStreamDetails, IPPVLandStream } from '.'
-import { nhlCatalogueBuilder } from 'catalog/nhl_catalogue'
+import { nhlCatalogueBuilder, nhlStreamBuilder } from './catalog/nhl_catalogue'
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 
 const manifest: Manifest = {
@@ -142,6 +142,24 @@ builder.defineCatalogHandler(async ({ id, extra }) => {
 builder.defineMetaHandler(async ({ id }) => {
   const regEx = RegExp(/^\d+$/gm)
   if (!regEx.test(id)) {
+    if (id.match(/tvusa/gi)) {
+      const catalog = await nhlCatalogueBuilder()
+      const item = catalog.find((a) => a.id == id)
+      if (item)
+        return {
+          meta: {
+            id,
+            name: item!.name!,
+            description: item.description,
+            type: "tv",
+            background: item?.background,
+            poster: item?.poster,
+            posterShape: item?.posterShape,
+            country: "USA",
+            logo: item?.logo,
+          }
+        }
+    }
     return {
       meta: {
         id: id,
@@ -162,6 +180,13 @@ builder.defineMetaHandler(async ({ id }) => {
 builder.defineStreamHandler(async ({ id }) => {
   const regEx = RegExp(/^\d+$/gm)
   if (!regEx.test(id)) {
+    if (id.match(/tvusa/gi)) {
+      const catalog = await nhlStreamBuilder(id)
+      console.log(catalog)
+      return {
+        streams: catalog
+      }
+    }
     return {
       streams: []
     }

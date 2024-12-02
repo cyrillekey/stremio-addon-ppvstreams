@@ -192,6 +192,7 @@ builder.defineMetaHandler((_a) => __awaiter(void 0, [_a], void 0, function* ({ i
                         posterShape: item === null || item === void 0 ? void 0 : item.posterShape,
                         country: "USA",
                         logo: item === null || item === void 0 ? void 0 : item.logo,
+                        language: 'ENGLISH'
                     }
                 };
         }

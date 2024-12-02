@@ -157,6 +157,7 @@ builder.defineMetaHandler(async ({ id }) => {
             posterShape: item?.posterShape,
             country: "USA",
             logo: item?.logo,
+            language: 'ENGLISH'
           }
         }
     }

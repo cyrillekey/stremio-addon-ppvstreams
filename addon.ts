@@ -8,6 +8,7 @@ import {
 } from 'stremio-addon-sdk'
 
 import { IPPLandStreamDetails, IPPVLandStream } from '.'
+import { nhlCatalogueBuilder } from 'catalog/nhl_catalogue'
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 
 const manifest: Manifest = {
@@ -22,8 +23,8 @@ const manifest: Manifest = {
     { id: 'NFL', name: 'NFL', type: 'tv', extra: [{ name: "search", isRequired: false }] },
     { id: "Combat Sports", name: "Combat sports", type: "tv", extra: [{ name: "search", isRequired: false }] },
     { id: "Wrestling", name: "Wrestling", type: "tv", extra: [{ name: "search", isRequired: false }] },
-    { id: "Formula 1", name: "Formula One", type: "tv", extra: [{ name: "search", isRequired: false }] },    
-    { id: "Ice Hockey", name: "Ice Hockey", type: "tv", extra: [{ name: "search", isRequired: false },] ,},
+    { id: "Formula 1", name: "Formula One", type: "tv", extra: [{ name: "search", isRequired: false }] },
+    { id: "Ice Hockey", name: "Ice Hockey", type: "tv", extra: [{ name: "search", isRequired: false },], },
     {
       id: 'Darts',
       name: 'Darts',
@@ -114,18 +115,23 @@ builder.defineCatalogHandler(async ({ id, extra }) => {
   let results: MetaPreview[] = []
   // PREVENT QUERYING FOR NON PPV EVENTS
   if (supported_id.includes(id))
-    results = (await getLiveFootballCatalog(id, extra.search)).map(
-      resp => ({
-        id: resp.id.toString(),
-        name: resp.name,
-        type: 'tv',
-        background: resp.poster,
-        description: resp.name,
-        poster: resp.poster,
-        posterShape: 'landscape',
-        logo: resp.poster,
-      }),
-    )
+    if (id == "Ice Hockey") {
+      results = await nhlCatalogueBuilder()
+
+    } else {
+      results = (await getLiveFootballCatalog(id, extra.search)).map(
+        resp => ({
+          id: resp.id.toString(),
+          name: resp.name,
+          type: 'tv',
+          background: resp.poster,
+          description: resp.name,
+          poster: resp.poster,
+          posterShape: 'landscape',
+          logo: resp.poster,
+        }),
+      )
+    }
   return {
     metas: results,
     cacheMaxAge: 60,

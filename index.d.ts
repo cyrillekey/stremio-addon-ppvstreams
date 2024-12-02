@@ -1,4 +1,3 @@
-import { Stream as TvStream } from "stremio-addon-sdk"
 export interface IPPVLandStream {
     category: string;
     id: number;
@@ -154,7 +153,11 @@ export interface FirstInitial {
     default: string;
 }
 
-
+export interface TvStream {
+    url: string
+    name: string
+    description: string
+}
 export interface TVUsaStream {
     id: string;
     type: string;

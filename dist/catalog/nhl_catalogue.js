@@ -78,14 +78,15 @@ const nhlCatalogueBuilder = () => __awaiter(void 0, void 0, void 0, function* ()
         const allGames = allGameWeeks.slice(0, 2).map((a) => a.games).flat();
         // filter to include only games that are currently underway
         const underway = allGames.filter((a) => {
-            if (a.gameState == "LIVE")
+            if (a.gameState == "LIVE" || a.gameState == "FUT")
                 return a;
-            if (a.gameState == "FUT") {
-                const startTime = (0, dayjs_1.default)(a.startTimeUTC).add(30, 'minutes').unix();
-                if (startTime < Date.now()) {
-                    return a;
-                }
-            }
+            // TODO undo after testing is complete
+            // if (a.gameState == "FUT") {
+            //     const startTime = dayjs(a.startTimeUTC).add(30, 'minutes').unix()
+            //     if (startTime < Date.now()) {
+            //         return a
+            //     }
+            // }
         });
         const streams = yield fetchTvUsaSportsLinks();
         const meta = underway.reduce((total, current) => {
@@ -94,44 +95,79 @@ const nhlCatalogueBuilder = () => __awaiter(void 0, void 0, void 0, function* ()
             if (channel.includes('MSG')) {
                 const exits = streams.find((a) => a.tvgId == "MSG.us");
                 if (exits != undefined) {
-                    availableChannels.push(exits.streams);
+                    availableChannels.push(...exits.streams);
                 }
             }
-            if (channel.includes('MSGSN')) {
-                //
-            }
-            if (channel.includes('NBCSP')) {
-                //
-            }
-            if (channel.includes('NBCSCA')) {
-                //
-            }
             if (channel.includes('FDSNSUN')) {
-                //
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/sun/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/sun/gi); }));
+                }
             }
             if (channel.includes('FDSNSO')) {
-                //
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/south/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/south/gi); }));
+                }
             }
             if (channel.includes('FDSNOH')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/ohio/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/ohio/gi); }));
+                }
+            }
+            if (channel.includes('FDSNW')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/West/); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/West/); }));
+                }
                 //
             }
             if (channel.includes('FDSNWIX')) {
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/Wisconsin/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/Wisconsin/gi); }));
+                }
                 //
             }
             if (channel.includes('FDSNMW')) {
-                //
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/Midwest/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/Midwest/gi); }));
+                }
             }
             if (channel.includes('NHLN')) {
-                //
+                const exits = streams.find((a) => a.tvgId == "NHLNetwork.us");
+                if (exits != undefined) {
+                    availableChannels.push(...exits.streams);
+                }
             }
             if (channel.includes('FDSNDET')) {
-                // pass
-            }
-            if (channel.includes('FDSNWIX')) {
-                //
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/detroit/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/detroit/gi); }));
+                }
             }
             if (channel.includes('FDSNNO')) {
-                //
+                const exits = streams.find((a) => a.tvgId == "FanduelSportsNetwork.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/north/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/north/gi); }));
+                }
+            }
+            if (channel.includes('KTTV')) {
+                const exits = streams.find((a) => a.tvgId == "WNYW.us");
+                if (exits != undefined) {
+                    if (exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/KTTV/gi); }))
+                        availableChannels.push(exits.streams.find((a) => { var _a; return (_a = a.description) === null || _a === void 0 ? void 0 : _a.match(/KTTV/gi); }));
+                }
             }
             if (availableChannels.length > 0) {
                 const meta = {

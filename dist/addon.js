@@ -34,6 +34,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Sentry = __importStar(require("@sentry/node"));
 const stremio_addon_sdk_1 = require("stremio-addon-sdk");
+const nhl_catalogue_1 = require("catalog/nhl_catalogue");
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 const manifest = {
     id: 'community.ppvstreams',
@@ -151,16 +152,21 @@ builder.defineCatalogHandler((_a) => __awaiter(void 0, [_a], void 0, function* (
     let results = [];
     // PREVENT QUERYING FOR NON PPV EVENTS
     if (supported_id.includes(id))
-        results = (yield getLiveFootballCatalog(id, extra.search)).map(resp => ({
-            id: resp.id.toString(),
-            name: resp.name,
-            type: 'tv',
-            background: resp.poster,
-            description: resp.name,
-            poster: resp.poster,
-            posterShape: 'landscape',
-            logo: resp.poster,
-        }));
+        if (id == "Ice Hockey") {
+            results = yield (0, nhl_catalogue_1.nhlCatalogueBuilder)();
+        }
+        else {
+            results = (yield getLiveFootballCatalog(id, extra.search)).map(resp => ({
+                id: resp.id.toString(),
+                name: resp.name,
+                type: 'tv',
+                background: resp.poster,
+                description: resp.name,
+                poster: resp.poster,
+                posterShape: 'landscape',
+                logo: resp.poster,
+            }));
+        }
     return {
         metas: results,
         cacheMaxAge: 60,

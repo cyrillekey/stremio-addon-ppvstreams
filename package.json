@@ -5,7 +5,8 @@
 	"scripts": {
 		"start": "node dist/server.js",
 		"build": "rimraf dist && tsc",
-		"add-build": "git add dist"
+		"add-build": "git add dist",
+		"dev":"ts-node server.ts"
 	},
 	"pre-commit": [
 		"build",
@@ -15,6 +16,7 @@
 		"@sentry/node": "^8.37.1",
 		"@sentry/profiling-node": "^8.37.1",
 		"@types/stremio-addon-sdk": "^1.6.11",
+		"dayjs": "^1.11.13",
 		"ioredis": "^5.4.1",
 		"stremio-addon-sdk": "1.1.x"
 	},
@@ -29,6 +31,7 @@
 		"pre-commit": "^1.2.2",
 		"prettier": "^3.3.3",
 		"rimraf": "^6.0.1",
+		"ts-node": "^10.9.2",
 		"typescript": "^5.6.3",
 		"typescript-eslint": "^8.13.0"
 	}

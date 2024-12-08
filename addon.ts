@@ -8,6 +8,7 @@ import {
 } from 'stremio-addon-sdk'
 
 import { IPPLandStreamDetails, IPPVLandStream } from '.'
+import { nhlCatalogueBuilder, nhlStreamBuilder } from './catalog/nhl_catalogue'
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 
 const manifest: Manifest = {
@@ -24,7 +25,7 @@ const manifest: Manifest = {
     { id: "Combat Sports", name: "Combat sports", type: "tv", extra: [{ name: "search", isRequired: false }] },
     { id: "Wrestling", name: "Wrestling", type: "tv", extra: [{ name: "search", isRequired: false }] },
     { id: "Formula 1", name: "Formula One", type: "tv", extra: [{ name: "search", isRequired: false }] },
-    { id: "Ice Hockey", name: "Ice Hockey", type: "tv", extra: [{ name: "search", isRequired: false }] },
+    { id: "Ice Hockey", name: "Ice Hockey", type: "tv", extra: [{ name: "search", isRequired: false },], },
     {
       id: 'Darts',
       name: 'Darts',
@@ -115,18 +116,23 @@ builder.defineCatalogHandler(async ({ id, extra }) => {
   let results: MetaPreview[] = []
   // PREVENT QUERYING FOR NON PPV EVENTS
   if (supported_id.includes(id))
-    results = (await getLiveFootballCatalog(id, extra.search)).map(
-      resp => ({
-        id: resp.id.toString(),
-        name: resp.name,
-        type: 'tv',
-        background: resp.poster,
-        description: resp.name,
-        poster: resp.poster,
-        posterShape: 'landscape',
-        logo: resp.poster,
-      }),
-    )
+    if (id == "Ice Hockey") {
+      results = await nhlCatalogueBuilder()
+
+    } else {
+      results = (await getLiveFootballCatalog(id, extra.search)).map(
+        resp => ({
+          id: resp.id.toString(),
+          name: resp.name,
+          type: 'tv',
+          background: resp.poster,
+          description: resp.name,
+          poster: resp.poster,
+          posterShape: 'landscape',
+          logo: resp.poster,
+        }),
+      )
+    }
   return {
     metas: results,
     cacheMaxAge: 60,
@@ -137,6 +143,25 @@ builder.defineCatalogHandler(async ({ id, extra }) => {
 builder.defineMetaHandler(async ({ id }) => {
   const regEx = RegExp(/^\d+$/gm)
   if (!regEx.test(id)) {
+    if (id.match(/tvusa/gi)) {
+      const catalog = await nhlCatalogueBuilder()
+      const item = catalog.find((a) => a.id == id)
+      if (item)
+        return {
+          meta: {
+            id,
+            name: item!.name!,
+            description: item.description,
+            type: "tv",
+            background: item?.background,
+            poster: item?.poster,
+            posterShape: item?.posterShape,
+            country: "USA",
+            logo: item?.logo,
+            language: 'ENGLISH'
+          }
+        }
+    }
     return {
       meta: {
         id: id,
@@ -157,6 +182,13 @@ builder.defineMetaHandler(async ({ id }) => {
 builder.defineStreamHandler(async ({ id }) => {
   const regEx = RegExp(/^\d+$/gm)
   if (!regEx.test(id)) {
+    if (id.match(/tvusa/gi)) {
+      const catalog = await nhlStreamBuilder(id)
+      console.log(catalog)
+      return {
+        streams: catalog
+      }
+    }
     return {
       streams: []
     }

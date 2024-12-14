@@ -454,15 +454,15 @@
     "@opentelemetry/instrumentation" "^0.49 || ^0.50 || ^0.51 || ^0.52.0"
     "@opentelemetry/sdk-trace-base" "^1.22"
 
-"@sentry/core@8.43.0":
-  version "8.43.0"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-8.43.0.tgz#e96a489e87a9999199f5ac27d8860da37c1fa8b4"
-  integrity sha512-ktyovtjkTMNud+kC/XfqHVCoQKreIKgx/hgeRvzPwuPyd1t1KzYmRL3DBkbcWVnyOPpVTHn+RsEI1eRcVYHtvw==
+"@sentry/core@8.45.0":
+  version "8.45.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-8.45.0.tgz#a03a1b666989898ce7fb33f9ec279ea08450b317"
+  integrity sha512-4YTuBipWSh4JrtSYS5GxUQBAcAgOIkEoFfFbwVcr3ivijOacJLRXTBn3rpcy1CKjBq0PHDGR+2RGRYC+bNAMxg==
 
-"@sentry/node@8.43.0", "@sentry/node@^8.37.1":
-  version "8.43.0"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-8.43.0.tgz#e7417a6c262f9492f68b522934bb75201b84abe1"
-  integrity sha512-qCQU9vFxf03ejw1h+qWJXCf0erV56HBi5xgi262lHiBLcRtuwj1xjufMVKOWX0sQEvAxzqpMZmqRE64lXLY4Ig==
+"@sentry/node@8.45.0", "@sentry/node@^8.37.1":
+  version "8.45.0"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-8.45.0.tgz#669360fc23214b7efb9b3209392d14d3e6d423e6"
+  integrity sha512-a+4csASc7zQlSAGt5AMVTUFn3Rz0qyiU90Hq1ejWLEF11i2FI73TrPVmyYT9bb+/AhzZV0vqmmrL5HVvxp/UGA==
   dependencies:
     "@opentelemetry/api" "^1.9.0"
     "@opentelemetry/context-async-hooks" "^1.29.0"
@@ -496,24 +496,24 @@
     "@opentelemetry/sdk-trace-base" "^1.29.0"
     "@opentelemetry/semantic-conventions" "^1.28.0"
     "@prisma/instrumentation" "5.19.1"
-    "@sentry/core" "8.43.0"
-    "@sentry/opentelemetry" "8.43.0"
+    "@sentry/core" "8.45.0"
+    "@sentry/opentelemetry" "8.45.0"
     import-in-the-middle "^1.11.2"
 
-"@sentry/opentelemetry@8.43.0":
-  version "8.43.0"
-  resolved "https://registry.yarnpkg.com/@sentry/opentelemetry/-/opentelemetry-8.43.0.tgz#9823a3e4162bf464c12092149fe714ba5e5ba0b9"
-  integrity sha512-Ey+z1+JuMsb+LNY5MddJhjJpCnmkVwGZwoc5T/wWfh+5WKnvZ5RSNwaUl71Ho0lpVhhejwuUtaNxc4Ilk1KjhA==
+"@sentry/opentelemetry@8.45.0":
+  version "8.45.0"
+  resolved "https://registry.yarnpkg.com/@sentry/opentelemetry/-/opentelemetry-8.45.0.tgz#9e544d975575834bd23860700d039917c1cb2b90"
+  integrity sha512-qk8TBqk0EO7ggMdun16Wfb38IBN+VQBKwdbs7rbUfKOmXudsDAcz3gg7QfCO7qHoCK8c+fY3cIKoVrQkJ879+Q==
   dependencies:
-    "@sentry/core" "8.43.0"
+    "@sentry/core" "8.45.0"
 
 "@sentry/profiling-node@^8.37.1":
-  version "8.43.0"
-  resolved "https://registry.yarnpkg.com/@sentry/profiling-node/-/profiling-node-8.43.0.tgz#6461a15ed94a30ed7787dd254d800500a05509ec"
-  integrity sha512-WyPknmDWA1nChFHv22u1k+nC7zo0iGpNLf9JuhpFxD0tAbltiXz414DQE/ISZvtPkDng89dVzKy0FJEAaGg7Dg==
+  version "8.45.0"
+  resolved "https://registry.yarnpkg.com/@sentry/profiling-node/-/profiling-node-8.45.0.tgz#992b1f1d6608656b00e66a36de358d5034e0181b"
+  integrity sha512-vQB/T/ZRQlrHfk/+xDPxpnSekbg2M/TMoYZu68rl4R35dfdmHqyazgH6PlTmItayMJgQuu+q5oUp+w0BFG3VxQ==
   dependencies:
-    "@sentry/core" "8.43.0"
-    "@sentry/node" "8.43.0"
+    "@sentry/core" "8.45.0"
+    "@sentry/node" "8.45.0"
     detect-libc "^2.0.2"
     node-abi "^3.61.0"
 
@@ -552,9 +552,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@^22.9.0":
-  version "22.10.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.10.1.tgz#41ffeee127b8975a05f8c4f83fb89bcb2987d766"
-  integrity sha512-qKgsUwfHZV2WCWLAnVP1JqnpE6Im6h3Y0+fYgMTasNQ7V++CBX5OT1as0g0f+OyubbFqhf6XVNIsmN4IIhEgGQ==
+  version "22.10.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.10.2.tgz#a485426e6d1fdafc7b0d4c7b24e2c78182ddabb9"
+  integrity sha512-Xxr6BBRCAOQixvonOye19wnzyDiUtTeqldOOmj3CkeblonbccA12PFwlufvRdrpjXxqnmUaeiU5EOA+7s5diUQ==
   dependencies:
     undici-types "~6.20.0"
 
@@ -588,7 +588,7 @@
   resolved "https://registry.yarnpkg.com/@types/shimmer/-/shimmer-1.2.0.tgz#9b706af96fa06416828842397a70dfbbf1c14ded"
   integrity sha512-UE7oxhQLLd9gub6JKIAhDq06T0F6FnztwMNRvYgjeQSBeMc1ZG/tA47EwfduvkuQS8apbkM/lpLpWsaCeYsXVg==
 
-"@types/stremio-addon-sdk@^1.6.11":
+"@types/stremio-addon-sdk@1.6.11":
   version "1.6.11"
   resolved "https://registry.yarnpkg.com/@types/stremio-addon-sdk/-/stremio-addon-sdk-1.6.11.tgz#5dd824459d6a36cebbb50c4a2e08ed62b475da13"
   integrity sha512-y0nXwX2gqrWcVYLEvujxqLOm/yZoMu8nLyiw1MthgVuiPp6RVfgWqwpql71MUV5shSfPNsd7EtsiWw2cUFhcWQ==
@@ -880,7 +880,7 @@ bytes@3.1.2:
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.2.tgz#8b0beeb98605adf1b128fa4386403c009e0221a5"
   integrity sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==
 
-call-bind-apply-helpers@^1.0.0:
+call-bind-apply-helpers@^1.0.0, call-bind-apply-helpers@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.1.tgz#32e5892e6361b29b0b545ba6f7763378daca2840"
   integrity sha512-BhYE+WDaywFg2TBWYNXAE+8B1ATnThNBqXHP5nQu0jWJdVvY2hvkpyB3qOmtmDePiS5/BDQ8wASEWGMWRG148g==
@@ -888,7 +888,7 @@ call-bind-apply-helpers@^1.0.0:
     es-errors "^1.3.0"
     function-bind "^1.1.2"
 
-call-bind@^1.0.7:
+call-bind@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/call-bind/-/call-bind-1.0.8.tgz#0736a9660f537e3388826f440d5ec45f744eaa4c"
   integrity sha512-oKlSFMcMwpUg2ednkhQ454wfWiU/ul3CkJe/PEHcTKuiX6RpbehUiFMXu13HalGZxfUwCQzZG747YXBn1im9ww==
@@ -897,6 +897,14 @@ call-bind@^1.0.7:
     es-define-property "^1.0.0"
     get-intrinsic "^1.2.4"
     set-function-length "^1.2.2"
+
+call-bound@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/call-bound/-/call-bound-1.0.2.tgz#9dbd4daf9f5f753bec3e4c8fbb8a2ecc4de6c39b"
+  integrity sha512-0lk0PHFe/uz0vl527fG9CgdE9WdafjDbCXvBbs+LUv000TVt2Jjhqbs4Jwm8gz070w8xXyEAxrPOMullsxXeGg==
+  dependencies:
+    call-bind "^1.0.8"
+    get-intrinsic "^1.2.5"
 
 callsites@^3.0.0:
   version "3.1.0"
@@ -1066,9 +1074,9 @@ cors@^2.8.4:
     vary "^1"
 
 cron@^3.2.1:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/cron/-/cron-3.3.0.tgz#01c3919a43d12b8eb1da2b01e9e008e0a34efe6a"
-  integrity sha512-uwRMLudSn2vPPjg392dKOm3KoJRw/eOOFtcHbrmRJxCd/NDF3187JVnajTvHPIlam0UwhKUZWwVPd1V5vBlmsw==
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/cron/-/cron-3.3.1.tgz#03c56b4a3ad52606160adfba1fab932c53838807"
+  integrity sha512-KpvuzJEbeTMTfLsXhUuDfsFYr8s5roUlLKb4fa68GszWrA4783C7q6m9yj4vyc6neyD/V9e0YiADSX2c+yRDXg==
   dependencies:
     "@types/luxon" "~3.4.0"
     luxon "~3.5.0"
@@ -1212,6 +1220,13 @@ es-errors@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/es-errors/-/es-errors-1.3.0.tgz#05f75a25dab98e4fb1dcd5e1472c0546d5057c8f"
   integrity sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==
+
+es-object-atoms@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/es-object-atoms/-/es-object-atoms-1.0.0.tgz#ddb55cd47ac2e240701260bc2a8e31ecb643d941"
+  integrity sha512-MZ4iQ6JwHOBQjahnjwaC1ZtIBH+2ohjamzAO3oaHcXYup7qxjF2fixyH+Q71voWHeOkI2q/TnJao/KfXYIZWbw==
+  dependencies:
+    es-errors "^1.3.0"
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -1532,19 +1547,21 @@ gauge@^3.0.0:
     strip-ansi "^6.0.1"
     wide-align "^1.1.2"
 
-get-intrinsic@^1.2.4:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/get-intrinsic/-/get-intrinsic-1.2.5.tgz#dfe7dd1b30761b464fe51bf4bb00ac7c37b681e7"
-  integrity sha512-Y4+pKa7XeRUPWFNvOOYHkRYrfzW07oraURSvjDmRVOJ748OrVmeXtpE4+GCEHncjCjkTxPNRt8kEbxDhsn6VTg==
+get-intrinsic@^1.2.4, get-intrinsic@^1.2.5:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/get-intrinsic/-/get-intrinsic-1.2.6.tgz#43dd3dd0e7b49b82b2dfcad10dc824bf7fc265d5"
+  integrity sha512-qxsEs+9A+u85HhllWJJFicJfPDhRmjzoYdl64aMWW9yRIJmSyxdn8IEkuIM530/7T+lv0TIHd8L6Q/ra0tEoeA==
   dependencies:
-    call-bind-apply-helpers "^1.0.0"
+    call-bind-apply-helpers "^1.0.1"
     dunder-proto "^1.0.0"
     es-define-property "^1.0.1"
     es-errors "^1.3.0"
+    es-object-atoms "^1.0.0"
     function-bind "^1.1.2"
     gopd "^1.2.0"
     has-symbols "^1.1.0"
     hasown "^2.0.2"
+    math-intrinsics "^1.0.0"
 
 glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
@@ -1900,6 +1917,11 @@ make-dir@^3.1.0:
   dependencies:
     semver "^6.0.0"
 
+math-intrinsics@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/math-intrinsics/-/math-intrinsics-1.0.0.tgz#4e04bf87c85aa51e90d078dac2252b4eb5260817"
+  integrity sha512-4MqMiKP90ybymYvsut0CH2g4XWbfLtmlCkXmtmdcDCxNB+mQcu1w/1+L/VD7vi/PSv7X2JYV7SCcR+jiPXnQtA==
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
@@ -2104,7 +2126,7 @@ object-assign@^4, object-assign@^4.1.1:
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==
 
-object-inspect@^1.13.1:
+object-inspect@^1.13.3:
   version "1.13.3"
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.13.3.tgz#f14c183de51130243d6d18ae149375ff50ea488a"
   integrity sha512-kDCGIbxkDSXE3euJZZXzc6to7fCrKHNI/hSRQnRuQ+BWjFNzZwiFF8fj/6o2t2G9/jTj8PSIYTfCLelLZEeRpA==
@@ -2602,15 +2624,45 @@ shimmer@^1.2.1:
   resolved "https://registry.yarnpkg.com/shimmer/-/shimmer-1.2.1.tgz#610859f7de327b587efebf501fb43117f9aff337"
   integrity sha512-sQTKC1Re/rM6XyFM6fIAGHRPVGvyXfgzIDvzoq608vM+jeyVD0Tu1E6Np0Kc2zAIFWIj963V2800iF/9LPieQw==
 
-side-channel@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/side-channel/-/side-channel-1.0.6.tgz#abd25fb7cd24baf45466406b1096b7831c9215f2"
-  integrity sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==
+side-channel-list@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/side-channel-list/-/side-channel-list-1.0.0.tgz#10cb5984263115d3b7a0e336591e290a830af8ad"
+  integrity sha512-FCLHtRD/gnpCiCHEiJLOwdmFP+wzCmDEkc9y7NsYxeF4u7Btsn1ZuwgwJGxImImHicJArLP4R0yX4c2KCrMrTA==
   dependencies:
-    call-bind "^1.0.7"
     es-errors "^1.3.0"
-    get-intrinsic "^1.2.4"
-    object-inspect "^1.13.1"
+    object-inspect "^1.13.3"
+
+side-channel-map@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/side-channel-map/-/side-channel-map-1.0.1.tgz#d6bb6b37902c6fef5174e5f533fab4c732a26f42"
+  integrity sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA==
+  dependencies:
+    call-bound "^1.0.2"
+    es-errors "^1.3.0"
+    get-intrinsic "^1.2.5"
+    object-inspect "^1.13.3"
+
+side-channel-weakmap@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz#11dda19d5368e40ce9ec2bdc1fb0ecbc0790ecea"
+  integrity sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==
+  dependencies:
+    call-bound "^1.0.2"
+    es-errors "^1.3.0"
+    get-intrinsic "^1.2.5"
+    object-inspect "^1.13.3"
+    side-channel-map "^1.0.1"
+
+side-channel@^1.0.6:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/side-channel/-/side-channel-1.1.0.tgz#c3fcff9c4da932784873335ec9765fa94ff66bc9"
+  integrity sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==
+  dependencies:
+    es-errors "^1.3.0"
+    object-inspect "^1.13.3"
+    side-channel-list "^1.0.0"
+    side-channel-map "^1.0.1"
+    side-channel-weakmap "^1.0.2"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.7"
@@ -2651,17 +2703,17 @@ statuses@2.0.1:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-2.0.1.tgz#55cb000ccf1d48728bd23c685a063998cf1a1b63"
   integrity sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==
 
-stremio-addon-linter@^1.6.1:
+stremio-addon-linter@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/stremio-addon-linter/-/stremio-addon-linter-1.7.0.tgz#3e4f4799950edd93255858ea22880be3949048d4"
   integrity sha512-ck1L1Wp2qvAhvXLj+4Lq1XRn8K3r2gx1i/f+e1W6K0+Et/oIYYDmaIVoh3SvExiNbCBcbJjH9WWEeDYKoqaMqQ==
   dependencies:
     semver "^5.5.0"
 
-stremio-addon-sdk@1.1.x:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/stremio-addon-sdk/-/stremio-addon-sdk-1.1.4.tgz#65db54693e080ae2340444b2bb40d61a1f10c839"
-  integrity sha512-RpLImIJANHVxIoLhtA2jI8wuEJCERis6uAUaPdnx603jBqxGC6N4vRsDUSz8CT/wJMf6ioJM1yX32vubUomhsw==
+stremio-addon-sdk@1.6.10:
+  version "1.6.10"
+  resolved "https://registry.yarnpkg.com/stremio-addon-sdk/-/stremio-addon-sdk-1.6.10.tgz#e339b23fbe73088d496ce8bfbafb316cebb98d8c"
+  integrity sha512-+U/lDGv73JPZa7OOy8eMb+SkUFhnHuZGBRXuKNeXcz706oDdwC/sQe9r8Wxw2A7Cw05+f/CQIJSl4zIcmKBkGg==
   dependencies:
     chalk "^2.4.2"
     cors "^2.8.4"
@@ -2671,7 +2723,7 @@ stremio-addon-sdk@1.1.x:
     node-fetch "^2.3.0"
     opn "^5.4.0"
     router "^1.3.3"
-    stremio-addon-linter "^1.6.1"
+    stremio-addon-linter "^1.7.0"
 
 "string-width-cjs@npm:string-width@^4.2.0", "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.1.0, string-width@^4.2.3:
   version "4.2.3"

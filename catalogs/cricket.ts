@@ -5,10 +5,10 @@ import dayjs from "dayjs"
 import { MetaDetail, MetaPreview, Stream } from "stremio-addon-sdk"
 import { IRapidCricketEvent } from "types"
 import { getFromCache, saveToCache } from "utils/redis"
-export const cricketCatalogBuilder = async (): Promise<MetaPreview[]> => {
+export const cricketCatalogBuilder = async ({ timeZone }: { timeZone?: string }): Promise<MetaPreview[]> => {
     try {
-        const now = dayjs.tz(dayjs(), 'Africa/Nairobi').unix()
-        const thirtyMinutes = dayjs.tz(dayjs(), 'Africa/Nairobi').add(45, 'minutes').unix()
+        const now = dayjs.tz(dayjs(), timeZone).unix()
+        const thirtyMinutes = dayjs.tz(dayjs(), timeZone).add(45, 'minutes').unix()
         const cacheExist = await getFromCache('catalog')
         if (!cacheExist) {
             return []
@@ -16,7 +16,7 @@ export const cricketCatalogBuilder = async (): Promise<MetaPreview[]> => {
             const matches = cacheExist as IDaddyliveEvent[]
             const filtered = matches.filter((a) => {
                 if (a.type == "cricket") {
-                    const startsAtMs = a.time
+                    const startsAtMs = dayjs.unix(a.time).tz(timeZone).unix()
                     console.log(thirtyMinutes)
                     if ((startsAtMs <= now) || (startsAtMs > now && startsAtMs <= thirtyMinutes)) {
                         return true
@@ -36,16 +36,15 @@ export const cricketCatalogBuilder = async (): Promise<MetaPreview[]> => {
             return filtered
         }
 
-    } catch (error) {
-        console.log(error)
+    } catch (error) {        
         Sentry.captureException(error)
         return []
     }
 }
 
-export const cricketMetaBuilder = async (id: string): Promise<MetaDetail> => {
+export const cricketMetaBuilder = async (id: string,): Promise<MetaDetail> => {
     try {
-        const stream = (await cricketCatalogBuilder()).find((a) => a.id == id)
+        const stream = (await cricketCatalogBuilder({})).find((a) => a.id == id)
         if (stream) {
             return {
                 id,

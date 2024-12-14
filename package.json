@@ -6,7 +6,7 @@
 		"start": "node dist/server.js",
 		"build": "rimraf dist && tsc",
 		"add-build": "git add dist",
-		"dev": "ts-node server.ts --launch"
+		"dev": "ts-node server.ts"
 	},
 	"_moduleAliases": {
 		"catalogs": "dist/catalogs",
@@ -15,8 +15,7 @@
 	},
 	"dependencies": {
 		"@sentry/node": "^8.37.1",
-		"@sentry/profiling-node": "^8.37.1",
-		"@types/stremio-addon-sdk": "^1.6.11",
+		"@sentry/profiling-node": "^8.37.1",		
 		"axios": "^1.7.9",
 		"canvas": "^2.11.2",
 		"cloudinary": "^2.5.1",
@@ -25,7 +24,7 @@
 		"dotenv": "^16.4.7",
 		"ioredis": "^5.4.1",
 		"module-alias": "^2.2.3",
-		"stremio-addon-sdk": "1.1.x",
+		"stremio-addon-sdk": "1.6.10",
 		"tsconfig-paths": "^4.2.0"
 	},
 	"devDependencies": {
@@ -40,6 +39,7 @@
 		"rimraf": "^6.0.1",
 		"tsc-alias": "^1.8.10",
 		"typescript": "^5.6.3",
-		"typescript-eslint": "^8.13.0"
+		"typescript-eslint": "^8.13.0",
+		"@types/stremio-addon-sdk":"1.6.11"
 	}
 }

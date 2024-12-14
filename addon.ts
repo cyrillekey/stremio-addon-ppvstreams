@@ -4,18 +4,23 @@ import {
   Manifest,
   MetaDetail,
   MetaPreview,
-  Stream,
+  Stream,  
 } from 'stremio-addon-sdk'
 
 
 import { cricketCatalogBuilder, cricketMetaBuilder, cricketStreamsBuilder } from 'catalogs/cricket'
 import { IPPLandStreamDetails, IPPVLandStream } from 'types'
+import { availableTimeZones } from 'utils/index'
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 
 const manifest: Manifest = {
   id: 'community.ppvstreams',
   version: '0.0.8',
   logo: "https://res.cloudinary.com/dftgy3yfd/image/upload/v1732693733/ppv-streams_wolcio.webp",
+  behaviorHints: {
+    configurable: true,
+    configurationRequired: false,
+  },
   catalogs: [
     { id: 'basketball', type: 'tv', name: 'Basketball', extra: [{ name: "search", isRequired: false }] },
     { id: 'football', name: 'Football', type: 'tv', extra: [{ name: "search", isRequired: false }] },
@@ -36,6 +41,8 @@ const manifest: Manifest = {
     { name: 'stream', types: ['tv'] },
     { name: 'meta', types: ['tv'] },
   ],
+  // @ts-expect-error error due to typing
+  config: [{ type: "select", key: "timeZone", default: "Africa/Nairobi", options: availableTimeZones, title: "Timezone" }],
   types: ['tv'],
   name: 'ppvstreams',
   description: 'Stream your favorite live sports, featuring football (soccer), NFL, basketball, wrestling, darts, and more. Enjoy real-time access to popular games and exclusive events, all conveniently available in one place. This add-on is based on PPV Land.',
@@ -102,7 +109,7 @@ async function getMovieMetaDetals(id: string): Promise<MetaDetail> {
       posterShape: 'landscape',
       background: response?.data?.poster ?? "https://placehold.co/600x400",
       language: 'english',
-      website: response.data.source,      
+      website: response.data.source,
     }
   } catch (error) {
     Sentry.captureException(error)
@@ -110,13 +117,14 @@ async function getMovieMetaDetals(id: string): Promise<MetaDetail> {
   }
 }
 const builder = new addonBuilder(manifest)
-builder.defineCatalogHandler(async ({ id, extra }) => {  
+
+builder.defineCatalogHandler(async ({ id, extra, config }) => {
   let results: MetaPreview[] = []
   // PREVENT QUERYING FOR NON PPV EVENTS
   if (supported_id.includes(id))
     switch (id) {
       case 'cricket':
-        results = await cricketCatalogBuilder()
+        results = await cricketCatalogBuilder({ timeZone: config?.timeZone ?? "Africa/Nairobi" })
         break
       default:
         results = (await getLiveFootballCatalog(id, extra.search)).map(
@@ -140,6 +148,7 @@ builder.defineCatalogHandler(async ({ id, extra }) => {
     staleError: 24 * 60 * 60
   }
 })
+
 builder.defineMetaHandler(async ({ id }) => {
   const regEx = RegExp(/^\d+$/gm)
   if (!regEx.test(id)) {
@@ -166,7 +175,7 @@ builder.defineMetaHandler(async ({ id }) => {
   }
 },)
 
-builder.defineStreamHandler(async ({ id}) => {  
+builder.defineStreamHandler(async ({ id }) => {
   const regEx = RegExp(/^\d+$/gm)
   if (!regEx.test(id)) {
     if (id.includes('wwtv')) {

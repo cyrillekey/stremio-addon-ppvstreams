@@ -25,7 +25,7 @@ Sentry.init({
     tracesSampleRate: 1.0, //  Capture 100% of the transactions
 })
 buildCatalogCron.start()
-serveHTTP(addonInterface, { port: Number(process.env.PORT ?? 56397) })
+serveHTTP(addonInterface, { port: Number(process.env.PORT ?? 56397), cacheMaxAge: 60, })
 
 // when you've deployed your addon, un-comment this line
 // publishToCentral("https://my-addon.awesome/manifest.json")

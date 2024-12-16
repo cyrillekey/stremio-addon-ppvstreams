@@ -10,6 +10,7 @@ import {
 
 import { cricketCatalogBuilder, cricketMetaBuilder, cricketStreamsBuilder } from 'catalogs/cricket'
 import { IPPLandStreamDetails, IPPVLandStream } from 'types'
+import { footballMetaBuilder, footballStreamsHandler, getFootballCatalog } from 'catalogs/football'
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 
 const manifest: Manifest = {
@@ -31,11 +32,10 @@ const manifest: Manifest = {
     { id: 'cricket', name: "Cricket", type: "tv", extra: [{ name: "search", isRequired: false }] },
     { id: 'darts', name: 'darts', type: 'tv', extra: [{ name: "search", isRequired: false }] },
   ],
-  contactEmail: "cyrilleotieno7@gmail.com",
   resources: [
     { name: 'stream', types: ['tv'] },
     { name: 'meta', types: ['tv'] },
-  ],
+  ],  
   types: ['tv'],
   name: 'ppvstreams',
   description: 'Stream your favorite live sports, featuring football (soccer), NFL, basketball, wrestling, darts, and more. Enjoy real-time access to popular games and exclusive events, all conveniently available in one place. This add-on is based on PPV Land.',
@@ -102,7 +102,7 @@ async function getMovieMetaDetals(id: string): Promise<MetaDetail> {
       posterShape: 'landscape',
       background: response?.data?.poster ?? "https://placehold.co/600x400",
       language: 'english',
-      website: response.data.source,      
+      website: response.data.source,
     }
   } catch (error) {
     Sentry.captureException(error)
@@ -110,13 +110,16 @@ async function getMovieMetaDetals(id: string): Promise<MetaDetail> {
   }
 }
 const builder = new addonBuilder(manifest)
-builder.defineCatalogHandler(async ({ id, extra }) => {  
+builder.defineCatalogHandler(async ({ id, extra }) => {
   let results: MetaPreview[] = []
   // PREVENT QUERYING FOR NON PPV EVENTS
   if (supported_id.includes(id))
     switch (id) {
       case 'cricket':
-        results = await cricketCatalogBuilder()
+        results = await cricketCatalogBuilder({ search: extra.search })
+        break
+      case 'football':
+        results = await getFootballCatalog({ search: extra.search })
         break
       default:
         results = (await getLiveFootballCatalog(id, extra.search)).map(
@@ -149,6 +152,13 @@ builder.defineMetaHandler(async ({ id }) => {
         meta
       }
     }
+
+    if (id.match(/football$/)) {
+      const meta = await footballMetaBuilder(id)
+      return {
+        meta
+      }
+    }
     return {
       meta: {
         id: id,
@@ -166,13 +176,19 @@ builder.defineMetaHandler(async ({ id }) => {
   }
 },)
 
-builder.defineStreamHandler(async ({ id}) => {  
+builder.defineStreamHandler(async ({ id }) => {
   const regEx = RegExp(/^\d+$/gm)
   if (!regEx.test(id)) {
     if (id.includes('wwtv')) {
       const streams = await cricketStreamsBuilder(id)
       return {
         streams
+      }
+    }
+    if (id.match(/football$/)) {
+      const streams = await footballStreamsHandler(id)
+      return {
+        streams: streams
       }
     }
     return {

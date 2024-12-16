@@ -5,10 +5,10 @@ import dayjs from "dayjs"
 import { MetaDetail, MetaPreview, Stream } from "stremio-addon-sdk"
 import { IRapidCricketEvent } from "types"
 import { getFromCache, saveToCache } from "utils/redis"
-export const cricketCatalogBuilder = async (): Promise<MetaPreview[]> => {
+export const cricketCatalogBuilder = async ({ search }: { search?: string }): Promise<MetaPreview[]> => {
     try {
-        const now = dayjs.tz(dayjs(), 'Africa/Nairobi').unix()
-        const thirtyMinutes = dayjs.tz(dayjs(), 'Africa/Nairobi').add(45, 'minutes').unix()
+        const now = dayjs.tz(dayjs().utc(), 'Africa/Nairobi').unix()
+        const thirtyMinutes = dayjs.tz(dayjs().utc(), 'Africa/Nairobi').add(45, 'minutes').unix()
         const cacheExist = await getFromCache('catalog')
         if (!cacheExist) {
             return []
@@ -16,8 +16,7 @@ export const cricketCatalogBuilder = async (): Promise<MetaPreview[]> => {
             const matches = cacheExist as IDaddyliveEvent[]
             const filtered = matches.filter((a) => {
                 if (a.type == "cricket") {
-                    const startsAtMs = a.time
-                    console.log(thirtyMinutes)
+                    const startsAtMs = a.time                    
                     if ((startsAtMs <= now) || (startsAtMs > now && startsAtMs <= thirtyMinutes)) {
                         return true
                     }
@@ -33,11 +32,14 @@ export const cricketCatalogBuilder = async (): Promise<MetaPreview[]> => {
                     poster: a?.poster ?? "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fthumbs.dreamstime.com%2Fb%2Flive-cricket-tournament-poster-banner-design-game-equipments-glossy-blue-background-live-cricket-tournament-poster-135206032.jpg&f=1&nofb=1&ipt=8d940ce9afaad7d99d2cecf5c7cb85a6f02bcd8cccd67cb5678d3008a4f43fa8&ipo=images",
                     posterShape: "landscape",
                 }))
+
+            if (search) {
+                return filtered.filter((a) => a.name.match(RegExp(search, 'gi')))
+            }
             return filtered
         }
 
-    } catch (error) {
-        console.log(error)
+    } catch (error) {        
         Sentry.captureException(error)
         return []
     }
@@ -45,7 +47,7 @@ export const cricketCatalogBuilder = async (): Promise<MetaPreview[]> => {
 
 export const cricketMetaBuilder = async (id: string): Promise<MetaDetail> => {
     try {
-        const stream = (await cricketCatalogBuilder()).find((a) => a.id == id)
+        const stream = (await cricketCatalogBuilder({})).find((a) => a.id == id)
         if (stream) {
             return {
                 id,

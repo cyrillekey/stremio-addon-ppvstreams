@@ -111,7 +111,8 @@
     "paths": {
       "catalogs/*": ["./catalogs/*"],
       "utils/*": ["./utils/*"],
-      "cronjobs/*": ["./cronjobs/*"]
+      "cronjobs/*": ["./cronjobs/*"],
+      "api/*": ["./api/*"]
     }
   }
 }

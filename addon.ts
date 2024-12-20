@@ -11,11 +11,12 @@ import {
 import { cricketCatalogBuilder, cricketMetaBuilder, cricketStreamsBuilder } from 'catalogs/cricket'
 import { IPPLandStreamDetails, IPPVLandStream } from 'types'
 import { availableTimeZones } from 'utils/index'
+import { footballMetaBuilder, footballStreamsHandler, getFootballCatalog } from 'catalogs/football'
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 
 const manifest: Manifest = {
   id: 'community.ppvstreams',
-  version: '0.0.8',
+  version: '0.0.10',
   logo: "https://res.cloudinary.com/dftgy3yfd/image/upload/v1732693733/ppv-streams_wolcio.webp",
   behaviorHints: {
     configurable: true,
@@ -36,11 +37,10 @@ const manifest: Manifest = {
     { id: 'cricket', name: "Cricket", type: "tv", extra: [{ name: "search", isRequired: false }] },
     { id: 'darts', name: 'darts', type: 'tv', extra: [{ name: "search", isRequired: false }] },
   ],
-  contactEmail: "cyrilleotieno7@gmail.com",
   resources: [
     { name: 'stream', types: ['tv'] },
     { name: 'meta', types: ['tv'] },
-  ],
+  ],  
   // @ts-expect-error error due to typing
   config: [{ type: "select", key: "timeZone", default: "Africa/Nairobi", options: availableTimeZones, title: "Timezone" }],
   types: ['tv'],
@@ -124,7 +124,10 @@ builder.defineCatalogHandler(async ({ id, extra, config }) => {
   if (supported_id.includes(id))
     switch (id) {
       case 'cricket':
-        results = await cricketCatalogBuilder({ timeZone: config?.timeZone ?? "Africa/Nairobi" })
+        results = await cricketCatalogBuilder({ timeZone: config?.timeZone ?? "Africa/Nairobi" }{ search: extra.search })
+        break
+      case 'football':
+        results = await getFootballCatalog({ search: extra.search })
         break
       default:
         results = (await getLiveFootballCatalog(id, extra.search)).map(
@@ -158,6 +161,13 @@ builder.defineMetaHandler(async ({ id }) => {
         meta
       }
     }
+
+    if (id.match(/football$/)) {
+      const meta = await footballMetaBuilder(id)
+      return {
+        meta
+      }
+    }
     return {
       meta: {
         id: id,
@@ -182,6 +192,12 @@ builder.defineStreamHandler(async ({ id }) => {
       const streams = await cricketStreamsBuilder(id)
       return {
         streams
+      }
+    }
+    if (id.match(/football$/)) {
+      const streams = await footballStreamsHandler(id)
+      return {
+        streams: streams
       }
     }
     return {

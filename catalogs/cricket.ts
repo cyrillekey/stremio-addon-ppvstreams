@@ -5,7 +5,7 @@ import dayjs from "dayjs"
 import { MetaDetail, MetaPreview, Stream } from "stremio-addon-sdk"
 import { IRapidCricketEvent } from "types"
 import { getFromCache, saveToCache } from "utils/redis"
-export const cricketCatalogBuilder = async ({ timeZone }: { timeZone?: string }{ search }: { search?: string }): Promise<MetaPreview[]> => {
+export const cricketCatalogBuilder = async ({ timeZone,search }: { timeZone?: string , search?: string }): Promise<MetaPreview[]> => {
     try {
         const now = dayjs.tz(dayjs().utc(), timeZone).unix()
         const thirtyMinutes = dayjs.tz(dayjs().utc(), timeZone).add(45, 'minutes').unix()

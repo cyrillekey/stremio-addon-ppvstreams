@@ -4,7 +4,7 @@ import {
   Manifest,
   MetaDetail,
   MetaPreview,
-  Stream,  
+  Stream,
 } from 'stremio-addon-sdk'
 
 
@@ -40,7 +40,7 @@ const manifest: Manifest = {
   resources: [
     { name: 'stream', types: ['tv'] },
     { name: 'meta', types: ['tv'] },
-  ],  
+  ],
   // @ts-expect-error error due to typing
   config: [{ type: "select", key: "timeZone", default: "Africa/Nairobi", options: availableTimeZones, title: "Timezone" }],
   types: ['tv'],
@@ -124,7 +124,7 @@ builder.defineCatalogHandler(async ({ id, extra, config }) => {
   if (supported_id.includes(id))
     switch (id) {
       case 'cricket':
-        results = await cricketCatalogBuilder({ timeZone: config?.timeZone ?? "Africa/Nairobi" }{ search: extra.search })
+        results = await cricketCatalogBuilder({ timeZone: config?.timeZone ?? "Africa/Nairobi", search: extra.search })
         break
       case 'football':
         results = await getFootballCatalog({ search: extra.search })

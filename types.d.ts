@@ -131,3 +131,12 @@ export interface IFootballEventCatalog {
 }
 
 export type Status = "Live" | "Uncoming";
+interface AppConfig {
+    timeZone?:string
+}
+
+declare module 'stremio-addon-sdk' {
+    interface Args {
+        config: AppConfig
+    }
+}
